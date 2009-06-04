@@ -13,12 +13,12 @@ abstract class sfJpMobileEmoji
    * 変換テーブル
    * @var array
    */
-  protected $_decTable = array();
+  protected $_decTable;
   /**
    * エンコードテーブル
    * @var array
    */
-  protected $_encTable = array();
+  protected $_encTable;
   /**
    * Webコード検出パターン
    * @var string
@@ -36,12 +36,10 @@ abstract class sfJpMobileEmoji
   public function __construct()
   {
     // 絵文字変換テーブルの読み込み
-    if (!sfJpMobile::isDocomo()) {
-      $this->_decTable = sfYaml::load(dirname(__FILE__) . '/../../config/' . strtolower(sfJpMobile::getShortCarrierName()) . '_dec.yml');
-      $this->_encTable = sfYaml::load(dirname(__FILE__) . '/../../config/' . strtolower(sfJpMobile::getShortCarrierName()) . '_enc.yml');
-    } else {
-      $this->_encTable = sfYaml::load(dirname(__FILE__) . '/../../config/dc_enc.yml');
-    }
+    include sfContext::getInstance()->getConfigCache()->checkConfig('config/jpmobile/emoji/' . strtolower(sfJpMobile::getShortCarrierName()) . '_dec.yml');
+    include sfContext::getInstance()->getConfigCache()->checkConfig('config/jpmobile/emoji/' . strtolower(sfJpMobile::getShortCarrierName()) . '_enc.yml');
+    $this->_decTable = sfConfig::get('jpmobile_emoji_dec', array());
+    $this->_encTable = sfConfig::get('jpmobile_emoji_enc', array());
     $this->initialize();
   }
   /**
@@ -84,11 +82,11 @@ abstract class sfJpMobileEmoji
    */
   public function findTextCode($str)
   {
-    $matches = array();
+    $result = array();
     if (preg_match_all($this->_webCodeRegex, $str, $matches)) {
       $matches = array_unique($matches[0]);
     }
-    return $matches;
+    return $result;
   }
   /**
    * バイナリ絵文字検出
@@ -98,8 +96,8 @@ abstract class sfJpMobileEmoji
   public function findBin($str)
   {
     $result = array();
-    if (preg_match_all($this->_binCodeRegex, $str, $match)) {
-      $result = array_unique($match[0]);
+    if (preg_match_all($this->_binCodeRegex, $str, $matches)) {
+      $result = array_unique($matches[0]);
     }
     return $result;
   }
