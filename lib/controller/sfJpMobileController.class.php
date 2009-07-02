@@ -9,6 +9,46 @@
  */
 class sfJpMobileController extends sfFrontWebController
 {
+  /**
+   * @see sfWebController
+   */
+  public function genUrl($parameters = array(), $absolute = false)
+  {
+    $url = parent::genUrl($parameters, $absolute);
+    if (sfJpMobile::isDocomo()) {
+      if (!preg_match('/(\?|&)guid=/', $url)) {
+        $url .= (strpos($url, '?') === false ? '?' : '&') . 'guid=ON';
+      }
+    }
+    return $url;
+  }
+  /**
+   * @see sfWebController
+   */
+  public function redirect($url, $delay = 0, $statusCode = 302)
+  {
+    $url = $this->genUrl($url, true);
+
+    if (!preg_match('/(\?|&)'.preg_quote(SID).'/', $url)) {
+      $url .= (strpos($url, '?') === false ? '?' : '&') . SID;
+    }
+
+    if (sfConfig::get('sf_logging_enabled'))
+    {
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Redirect to "%s"', $url))));
+    }
+
+    // redirect
+    $response = $this->context->getResponse();
+    $response->clearHttpHeaders();
+    $response->setStatusCode($statusCode);
+    $response->setHttpHeader('Location', $url);
+    $response->setContent(sprintf('<html><head><meta http-equiv="refresh" content="%d;url=%s"/></head></html>', $delay, htmlspecialchars($url, ENT_QUOTES, sfConfig::get('sf_charset'))));
+    $response->send();
+  }
+  /**
+   * @see sfController
+   */
   public function getView($moduleName, $actionName, $viewName)
   {
     // user view exists?
