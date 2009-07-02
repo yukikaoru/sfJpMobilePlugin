@@ -17,8 +17,7 @@ class sfJpMobileController extends sfFrontWebController
     $url = parent::genUrl($parameters, $absolute);
     if (sfJpMobile::isDocomo()) {
       if (!preg_match('/(\?|&)guid=/', $url)) {
-        $url .= (strpos('?', $url) === false ? '?' : '&')
-              . 'guid=ON';
+        $url .= (strpos($url, '?') === false ? '?' : '&') . 'guid=ON';
       }
     }
     return $url;
@@ -31,8 +30,7 @@ class sfJpMobileController extends sfFrontWebController
     $url = $this->genUrl($url, true);
 
     if (!preg_match('/(\?|&)bbid=/', $url)) {
-      $url .= (strpos('?', $url) === false ? '?' : '&')
-            . session_name() . '=' . session_id();
+      $url .= (strpos($url, '?') === false ? '?' : '&') . SID;
     }
 
     if (sfConfig::get('sf_logging_enabled'))
