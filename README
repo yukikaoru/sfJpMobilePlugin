@@ -5,6 +5,8 @@ symfonyで携帯サイトを作った際に作ったものをプラグインと�
 自分の仕事で利用しているので、下位機種はもとより、中位機種の対応すら考慮されてません。
 キャリア判別にはファイアーウォール側でIP判別を行っているので、IPによる判別機能はもっていません。
 
+IPによる判別を行いたいのであれば、sfMobileIPPluginを利用したほうがいいかなと思います。
+
 == 実装機能
 * UserAgentによるキャリア判別
 * 端末IDの取得
@@ -33,11 +35,6 @@ apps/*/config/app.yml(app/*/modules/*/config/module.yml でもOK)
   all:
     view:
       class: sfJpMobile
-
-==== ヘルパーの利用
-apps/*/config/settings.yml
-  all:
-    standard_helpers:       [Partial, Cache, Form, JpMobileUrl]
 
 ==== レイアウトの変更
 自分で宣言してもいいけど、一応DOCTYPEの切り替えパーシャルがプリセットされている。
