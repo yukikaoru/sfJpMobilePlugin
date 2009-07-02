@@ -29,7 +29,7 @@ class sfJpMobileController extends sfFrontWebController
   {
     $url = $this->genUrl($url, true);
 
-    if (!preg_match('/(\?|&)bbid=/', $url)) {
+    if (!preg_match('/(\?|&)'.preg_quote(SID).'/', $url)) {
       $url .= (strpos($url, '?') === false ? '?' : '&') . SID;
     }
 
