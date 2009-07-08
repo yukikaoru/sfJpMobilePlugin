@@ -18,8 +18,8 @@ class sfJpMobileFilter extends sfFilter
       if ($this->isFirstCall()) {
         // UIDの取得
         $this->_canGetUid();
-        // パラメータのUTF-8化
-        $this->_paramConvertToUtf8();
+        // パラメータをシステム内で扱いやすいように変換
+        $this->_paramConvert();
         // キャッシュ制御設定
         $this->_setCacheControl();
         // Content-Typeの設定
@@ -53,16 +53,21 @@ class sfJpMobileFilter extends sfFilter
     }
   }
   /**
-   * パラメータのUTF-8化
+   * パラメータの変換
    * @return null
    */
-  private function _paramConvertToUtf8()
+  private function _paramConvert()
   {
     if (sfJpMobile::isDocomo() || sfJpMobile::isKddi()) {
       foreach ($this->getContext()->getRequest()->getParameterHolder()->getAll() as $key => $val) {
         mb_convert_variables('UTF-8', 'SJIS-win,UTF-8', $val);
         $this->getContext()->getRequest()->setParameter($key, $val);
       }
+    }
+    $content = $this->getContext()->getResponse()->getContent();
+    // 絵文字変換
+    if (!sfJpMobile::isDocomo()) {
+      $content = sfJpMobile::getEmoji()->encode($content);
     }
   }
   /**

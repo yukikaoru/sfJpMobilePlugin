@@ -23,7 +23,12 @@ abstract class sfJpMobileEmoji
    * Webコード検出パターン
    * @var string
    */
-  protected $_webCodeRegex = '/(&#xE(?:6|7)[A-F0-9]{2};)/i';
+  protected $_webCodeRegex = '/&(#xE(?:6|7)[A-F0-9]{2});/i';
+  /**
+   * テキストコード検出パターン
+   * @var string
+   */
+  protected $_textCodeRegex = '/\[(#xE(?:6|7)[A-F0-9]{2})\]/i';
   /**
    * バイナリコード検出パターン
    * @var string
@@ -54,9 +59,23 @@ abstract class sfJpMobileEmoji
    */
   public function convert($str)
   {
+    foreach ($this->findWebCode($str) as $key) {
+      if (array_key_exists($key, $this->_decTable)) {
+        $str = str_replace("&{$key};", $this->_decTable[$key], $str);
+      }
+    }
+    return $str;
+  }
+  /**
+   * 各キャリア用のコードへのデコード
+   * @param   string    $str    変換対象
+   * @return  string
+   */
+  public function decode($str)
+  {
     foreach ($this->findTextCode($str) as $key) {
       if (array_key_exists($key, $this->_decTable)) {
-        $str = str_replace($key, $this->_decTable[$key], $str);
+        $str = str_replace("[{$key}]", $this->_decTable[$key], $str);
       }
     }
     return $str;
@@ -71,9 +90,22 @@ abstract class sfJpMobileEmoji
     foreach ($this->findBin($str) as $bin) {
       $hex = bin2hex($bin);
       $replace = array_key_exists($hex, $this->_encTable) ? $this->_encTable[$hex] : '';
-      $str = str_replace($bin, $replace, $str);
+      $str = str_replace($bin, "[{$replace}]", $str);
     }
     return $str;
+  }
+  /**
+   * DoCoMo絵文字Web記述用コード検出
+   * @param   string    $str    検索対象文字列
+   * @return  array
+   */
+  public function findWebCode($str)
+  {
+    $result = array();
+    if (preg_match_all($this->_webCodeRegex, $str, $matches)) {
+      $result = array_unique($matches[1]);
+    }
+    return $result;
   }
   /**
    * DoCoMo絵文字テキストコード検出
@@ -83,8 +115,8 @@ abstract class sfJpMobileEmoji
   public function findTextCode($str)
   {
     $result = array();
-    if (preg_match_all($this->_webCodeRegex, $str, $matches)) {
-      $matches = array_unique($matches[0]);
+    if (preg_match_all($this->_textCodeRegex, $str, $matches)) {
+      $result = array_unique($matches[1]);
     }
     return $result;
   }
@@ -97,7 +129,7 @@ abstract class sfJpMobileEmoji
   {
     $result = array();
     if (preg_match_all($this->_binCodeRegex, $str, $matches)) {
-      $result = array_unique($matches[0]);
+      $result = array_unique($matches[1]);
     }
     return $result;
   }
