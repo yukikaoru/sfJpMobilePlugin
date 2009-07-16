@@ -89,8 +89,20 @@ abstract class sfJpMobileEmoji
   {
     foreach ($this->findBin($str) as $bin) {
       $hex = bin2hex($bin);
-      $replace = array_key_exists($hex, $this->_encTable) ? $this->_encTable[$hex] : '';
-      $str = str_replace($bin, "[{$replace}]", $str);
+      $replace = array_key_exists($hex, $this->_encTable) ? "[{$this->_encTable[$hex]}]" : '';
+      $str = str_replace($bin, $replace, $str);
+    }
+    return $str;
+  }
+  /**
+   * 絵文字の削除
+   * @param   string    $str    対象
+   * @return  string
+   */
+  public function trim($str)
+  {
+    foreach ($this->findBin($str) as $bin) {
+      $str = str_replace($bin, '', $str);
     }
     return $str;
   }
@@ -129,7 +141,7 @@ abstract class sfJpMobileEmoji
   {
     $result = array();
     if (preg_match_all($this->_binCodeRegex, $str, $matches)) {
-      $result = array_unique($matches[1]);
+      $result = array_unique($matches[0]);
     }
     return $result;
   }

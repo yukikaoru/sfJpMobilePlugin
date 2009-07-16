@@ -51,6 +51,7 @@ class sfJpMobileFilter extends sfFilter
               ->getAction($context->getModuleName(), $context->getActionName())
               ->redirect("{$uri}guid=ON");
     }
+    apache_note('uid', sfJpMobile::getDevice()->getUid());
   }
   /**
    * パラメータの変換
@@ -63,11 +64,6 @@ class sfJpMobileFilter extends sfFilter
         mb_convert_variables('UTF-8', 'SJIS-win,UTF-8', $val);
         $this->getContext()->getRequest()->setParameter($key, $val);
       }
-    }
-    $content = $this->getContext()->getResponse()->getContent();
-    // 絵文字変換
-    if (!sfJpMobile::isDocomo()) {
-      $content = sfJpMobile::getEmoji()->encode($content);
     }
   }
   /**
