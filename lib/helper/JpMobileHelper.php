@@ -44,10 +44,10 @@ function add_istyle($style, $attr = array())
  */
 function istyle($style)
 {
-  $result = '';
+  $result = array();
   foreach (add_istyle($style) as $k => $v) {
-    $result .= "{$k}=\"{$v}\" ";
+    $result []= "{$k}=\"{$v}\"";
   }
-  return $result;
+  return implode(' ', $result);
 }
 
