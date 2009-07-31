@@ -14,11 +14,11 @@ all:
         - "-wap-input-format:*m;"
         - "-wap-input-format:*N;"
 
-      format:
-        - M
-        - M
-        - m
-        - N
+    #  format:
+    #    - M
+    #    - M
+    #    - m
+    #    - N
 
     sb:
       #style:
