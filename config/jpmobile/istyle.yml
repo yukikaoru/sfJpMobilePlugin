@@ -1,0 +1,35 @@
+all:
+  istyle:
+    docomo:
+      style:
+        - "-wap-input-format:&quot;*&lt;ja:h&gt;&quot;;"
+        - "-wap-input-format:&quot;*&lt;ja:hk&gt;&quot;;"
+        - "-wap-input-format:&quot;*&lt;ja:en&gt;&quot;;"
+        - "-wap-input-format:&quot;*&lt;ja:n&gt;&quot;;"
+
+    au:
+      style:
+        - "-wap-input-format:*M;"
+        - "-wap-input-format:*M;"
+        - "-wap-input-format:*m;"
+        - "-wap-input-format:*N;"
+
+    #  format:
+    #    - M
+    #    - M
+    #    - m
+    #    - N
+
+    softbank:
+      #style:
+      #  - "-wap-input-format:&quot;*&lt;ja:h&gt;&quot;;"
+      #  - "-wap-input-format:&quot;*&lt;ja:hk&gt;&quot;;"
+      #  - "-wap-input-format:&quot;*&lt;ja:en&gt;&quot;;"
+      #  - "-wap-input-format:&quot;*&lt;ja:n&gt;&quot;;"
+
+      mode:
+        - hiragana
+        - hankakukana
+        - alphabet
+        - numeric
+

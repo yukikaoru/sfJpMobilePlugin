@@ -1,0 +1,9 @@
+config/jpmobile/emoji/*.yml:
+  file: %SF_PLUGINS_DIR%/sfJpMobilePlugin/lib/config/sfJpMobileEmojiConfigHandler.class.php
+  class: sfJpMobileEmojiConfigHandler
+
+config/jpmobile/istyle.yml:
+  class: sfDefineEnvironmentConfigHandler
+  param:
+    prefix: jpmobile_
+
