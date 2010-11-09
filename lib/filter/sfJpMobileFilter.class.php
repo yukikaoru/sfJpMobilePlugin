@@ -58,11 +58,25 @@ class sfJpMobileFilter extends sfFilter
     private function _paramConvert()
     {
         if (sfJpMobile::getInstance()->isDocomo() || sfJpMobile::getInstance()->isAu()) {
-            foreach ($this->getContext()->getRequest()->getParameterHolder()->getAll() as $key => $val) {
-                mb_convert_variables('UTF-8', 'SJIS-win,UTF-8', $val);
-                $this->getContext()->getRequest()->setParameter($key, $val);
-            }
+            $this->getContext()->getRequest()->addRequestParameters($this->convertEncoding($this->getContext()->getRequest()->getParameterHolder()->getAll()));
         }
+    }
+    /**
+     * encode
+     *
+     * @param   string  $value
+     * @return  string
+     */
+    private function convertEncoding($value)
+    {
+        if (is_array($value)) {
+            foreach ($value as &$v) {
+                $v = $this->convertEncoding($v);
+            }
+        } else {
+            $value = mb_convert_encoding($value, 'UTF-8', 'ASCII,JIS,UTF-8,EUCJP-win,SJIS-win');
+        }
+        return $value;
     }
     /**
      * Content-Typeの設定
