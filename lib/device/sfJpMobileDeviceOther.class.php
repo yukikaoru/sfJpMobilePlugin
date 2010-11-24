@@ -1,7 +1,7 @@
 <?php
 /* vim:set et ts=4 sts=4 sw=4: */
 /**
- * PC用端末オブジェクト
+ * その他端末オブジェクト
  *
  * @package     sfJpMobile
  * @subpackage  device
@@ -12,6 +12,6 @@ class sfJpMobileDeviceOther extends sfJpMobileDevice
 {
     public function parse()
     {
-        $this->id = "PC";
+        $this->id = "other";
     }
 }

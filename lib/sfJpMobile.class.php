@@ -111,7 +111,7 @@ class sfJpMobile
     }
 
     /**
-     * KDDIかどうか
+     * auかどうか
      * @return boolean
      */
     public function isAu()

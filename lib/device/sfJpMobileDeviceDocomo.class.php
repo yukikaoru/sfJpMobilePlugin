@@ -6,7 +6,7 @@
  * @package     sfJpMobile
  * @subpackage  device
  * @author      YUKI Kaoru <yuki@yagni.jp>
- * @version     $Id$
+ * @version     $Id:$
  */
 class sfJpMobileDeviceDocomo extends sfJpMobileDevice
 {
