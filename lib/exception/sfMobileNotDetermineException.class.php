@@ -1,5 +1,5 @@
 <?php
-/* vim:set expandtab tabstop=2 softtabstop=2 shiftwidth=2: */
+/* vim:set et ts=4 sts=4 sw=4: */
 /**
  * sfMobileNotDetermineException
  *

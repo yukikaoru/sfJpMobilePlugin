@@ -1,0 +1,176 @@
+Mobile:
+  actAs:
+    Timestampable: 
+  columns:
+    id:
+      primary: true
+      type: string(255)
+      notnull: true
+    name:
+      type: string(255)
+      notnull: true
+    carrier:
+      default: other
+      type: enum
+      notnull: true
+      values: [other, docomo,au,SoftBank]
+    supported:
+      default: false
+      type: boolean
+      notnull: true
+    released_at:
+      type: date
+    wallpaper_width:
+      type: integer(4)
+    wallpaper_height:
+      type: integer(4)
+    browser_width:
+      type: integer(4)
+    browser_height:
+      type: integer(4)
+    browser_version:
+      type: string(255)
+    gif:
+      default: false
+      type: boolean
+      notnull: true
+    jpeg:
+      default: false
+      type: boolean
+      notnull: true
+    png:
+      default: false
+      type: boolean
+      notnull: true
+    bmp2:
+      default: false
+      type: boolean
+      notnull: true
+    bmp4:
+      default: false
+      type: boolean
+      notnull: true
+    mng:
+      default: false
+      type: boolean
+      notnull: true
+    animation_gif:
+      default: false
+      type: boolean
+      notnull: true
+    transparent_gif:
+      default: false
+      type: boolean
+      notnull: true
+    amc:
+      default: false
+      type: boolean
+      notnull: true
+    asf:
+      default: false
+      type: boolean
+      notnull: true
+    3g2:
+      default: false
+      type: boolean
+      notnull: true
+    3gp:
+      default: false
+      type: boolean
+      notnull: true
+    chord:
+      type: integer(4)
+    music:
+      default: false
+      type: boolean
+      notnull: true
+    full_music:
+      default: false
+      type: boolean
+      notnull: true
+    movie:
+      default: false
+      type: boolean
+      notnull: true
+    huge_movie:
+      default: false
+      type: boolean
+      notnull: true
+    appli:
+      default: false
+      type: boolean
+      notnull: true
+    appli_type:
+      type: enum
+      values: [Java,BREW]
+    appli_version:
+      type: string(255)
+    appli_capacity:
+      type: integer(8)
+    flash:
+      default: false
+      type: boolean
+      notnull: true
+    flash_version:
+      type: string(255)
+    gps:
+      default: false
+      type: boolean
+      notnull: true
+    dress_up:
+      default: false
+      type: boolean
+      notnull: true
+    ssl:
+      type: enum
+      values: [end-to-end,link-by-link]
+    cookie:
+      default: false
+      type: boolean
+      notnull: true
+    utn:
+      default: false
+      type: boolean
+      notnull: true
+  indexes:
+    IX_Mobile_carrier:
+      fields: [carrier]
+  relations:
+    SupportedAppliGames:
+      class: AppliGame
+      refClass: AppliGameSupportedMobile
+      local: mobile_id
+      foreign: appli_game_id
+    SupportedAppliGames:
+      class: AppliGame
+      refClass: AppliGameSupportedMobile
+      local: mobile_id
+      foreign: appli_game_id
+    SupportedAppliGames:
+      class: AppliGame
+      refClass: AppliGameSupportedMobile
+      local: mobile_id
+      foreign: appli_game_id
+    SupportedAppliGames:
+      class: AppliGame
+      refClass: AppliGameSupportedMobile
+      local: mobile_id
+      foreign: appli_game_id
+DocomoMobile:
+  inheritance:
+    extends: Mobile
+    type: column_aggregation
+    keyField: carrier
+    keyValue: docomo
+AuMobile:
+  inheritance:
+    extends: Mobile
+    type: column_aggregation
+    keyField: carrier
+    keyValue: au
+SoftbankMobile:
+  inheritance:
+    extends: Mobile
+    type: column_aggregation
+    keyField: carrier
+    keyValue: SoftBank

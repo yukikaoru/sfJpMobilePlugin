@@ -1,5 +1,5 @@
 <?php
-/* vim:set expandtab tabstop=2 softtabstop=2 shiftwidth=2: */
+/* vim:set et ts=4 sts=4 sw=4: */
 /**
  * 携帯用ヘルパー
  *
@@ -17,23 +17,23 @@
  */
 function add_istyle($style, $attr = array())
 {
-  $data = new stdClass();
-  $carrier = sfJpMobile::getShortCarrierName();
-  $config = sfConfig::get("jpmobile_istyle_{$carrier}");
-  foreach ($config as $k => $v) {
-    $data->{$k} = $v[$style - 1];
-  }
-  if (!sfJpMobile::isDocomo()) {
-    $data->istyle = $style;
-  }
-  foreach ($data as $k => $v) {
-    if (array_key_exists($k, $attr)) {
-      $attr[$k] .= $v;
-    } else {
-      $attr[$k] = $v;
+    $data = new stdClass();
+    $carrier = strtolower(sfJpMobile::getInstance()->getCarrierName());
+    $config = sfConfig::get("jpmobile_istyle_{$carrier}");
+    foreach ($config as $k => $v) {
+        $data->{$k} = $v[$style - 1];
     }
-  }
-  return $attr;
+    if (!sfJpMobile::getInstance()->isDocomo()) {
+        $data->istyle = $style;
+    }
+    foreach ($data as $k => $v) {
+        if (array_key_exists($k, $attr)) {
+            $attr[$k] .= $v;
+        } else {
+            $attr[$k] = $v;
+        }
+    }
+    return $attr;
 }
 
 /**
@@ -44,10 +44,10 @@ function add_istyle($style, $attr = array())
  */
 function istyle($style)
 {
-  $result = array();
-  foreach (add_istyle($style) as $k => $v) {
-    $result []= "{$k}=\"{$v}\"";
-  }
-  return implode(' ', $result);
+    $result = array();
+    foreach (add_istyle($style) as $k => $v) {
+        $result []= "{$k}=\"{$v}\"";
+    }
+    return implode(' ', $result);
 }
 

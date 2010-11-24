@@ -1,5 +1,5 @@
 <?php
-/* vim:set expandtab tabstop=2 softtabstop=2 shiftwidth=2: */
+/* vim:set et ts=4 sts=4 sw=4: */
 /**
  * 携帯用標準ビュー
  *
@@ -9,18 +9,17 @@
  */
 class sfJpMobileView extends sfPHPView
 {
-  protected function renderFile($_sfFile)
-  {
-    $info = pathinfo($_sfFile);
-    $base = "{$info['dirname']}/{$info['filename']}";
-    $filename = $base . ucfirst(strtolower(sfJpMobile::getCarrierName())) . '.' . $info['extension'];
-    if (!is_readable($filename)) {
-      $filename = "{$base}Mobile.{$info['extension']}";
-      if (!sfJpMobile::isMobile() || !is_readable($filename)) {
-        $filename = $_sfFile;
-      }
+    protected function renderFile($_sfFile)
+    {
+        $info = pathinfo($_sfFile);
+        $base = "{$info['dirname']}/{$info['filename']}";
+        $filename = $base . ucfirst(strtolower(sfJpMobile::getInstance()->getCarrierName())) . '.' . $info['extension'];
+        if (!is_readable($filename)) {
+            $filename = "{$base}Mobile.{$info['extension']}";
+            if (!sfJpMobile::getInstance()->isMobile() || !is_readable($filename)) {
+                $filename = $_sfFile;
+            }
+        }
+        return parent::renderFile($filename);
     }
-    return parent::renderFile($filename);
-  }
-
 }

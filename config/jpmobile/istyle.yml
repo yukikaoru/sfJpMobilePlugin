@@ -1,6 +1,6 @@
 all:
   istyle:
-    dc:
+    docomo:
       style:
         - "-wap-input-format:&quot;*&lt;ja:h&gt;&quot;;"
         - "-wap-input-format:&quot;*&lt;ja:hk&gt;&quot;;"
@@ -20,7 +20,7 @@ all:
     #    - m
     #    - N
 
-    sb:
+    softbank:
       #style:
       #  - "-wap-input-format:&quot;*&lt;ja:h&gt;&quot;;"
       #  - "-wap-input-format:&quot;*&lt;ja:hk&gt;&quot;;"
