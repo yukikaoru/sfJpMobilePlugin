@@ -135,27 +135,6 @@ Mobile:
   indexes:
     IX_Mobile_carrier:
       fields: [carrier]
-  relations:
-    SupportedAppliGames:
-      class: AppliGame
-      refClass: AppliGameSupportedMobile
-      local: mobile_id
-      foreign: appli_game_id
-    SupportedAppliGames:
-      class: AppliGame
-      refClass: AppliGameSupportedMobile
-      local: mobile_id
-      foreign: appli_game_id
-    SupportedAppliGames:
-      class: AppliGame
-      refClass: AppliGameSupportedMobile
-      local: mobile_id
-      foreign: appli_game_id
-    SupportedAppliGames:
-      class: AppliGame
-      refClass: AppliGameSupportedMobile
-      local: mobile_id
-      foreign: appli_game_id
 DocomoMobile:
   inheritance:
     extends: Mobile
