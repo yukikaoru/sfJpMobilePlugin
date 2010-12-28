@@ -75,9 +75,7 @@ class sfJpMobile
     private function _checkCarrier($patterns)
     {
         include sfContext::getInstance()->getConfigCache()->checkConfig('config/jpmobile/istyle.yml');
-        if (!($ua = getenv('HTTP_USER_AGENT'))) {
-            throw new sfMobileNotDetermineException('This access is not from mobile phone.');
-        }
+        $ua = getenv('HTTP_USER_AGENT');
         if (!is_array($patterns)) {
             $patterns = array($patterns);
         }
